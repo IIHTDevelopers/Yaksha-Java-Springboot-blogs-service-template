@@ -12,39 +12,36 @@ import com.yaksha.assessments.blogs.service.BlogService;
 @Service
 public class BlogServiceImpl implements BlogService {
 
-	@Autowired
-	private BlogRepository blogRepository;
+    @Autowired
+    private BlogRepository blogRepository;
 
-	@Override
-	public BlogEntity createBlog(BlogEntity blogEntity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public BlogEntity createBlog(BlogEntity blogEntity) {
+        // write your logic here
+        return null;
+    }
 
-	@Override
-	public BlogEntity getBlogById(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public BlogEntity getBlogById(Long id) {
+        // write your logic here
+        return null;
+    }
 
-	@Override
-	public BlogEntity updateBlog(BlogEntity blogEntity) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public BlogEntity updateBlog(BlogEntity blogEntity) {
+        // write your logic here
+        return null;
+    }
 
-	@Override
-	public Boolean deleteBlog(Long id) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public Boolean deleteBlog(Long id) {
+        // write your logic here
+        return false;
+    }
 
-	@Override
-	public List<BlogEntity> findAll() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	
-
+    @Override
+    public List<BlogEntity> findAll() {
+        // write your logic here
+        return null;
+    }
 }
