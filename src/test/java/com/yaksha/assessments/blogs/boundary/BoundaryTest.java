@@ -5,6 +5,10 @@ import static com.yaksha.assessments.blogs.testutils.TestUtils.currentTest;
 import static com.yaksha.assessments.blogs.testutils.TestUtils.testReport;
 import static com.yaksha.assessments.blogs.testutils.TestUtils.yakshaAssert;
 
+import java.io.IOException;
+import java.util.Set;
+
+import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
 import javax.validation.Validator;
 import javax.validation.ValidatorFactory;
@@ -14,6 +18,8 @@ import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
+
+import com.yaksha.assessments.blogs.entity.BlogEntity;
 
 @ExtendWith(SpringExtension.class)
 public class BoundaryTest {
@@ -32,17 +38,17 @@ public class BoundaryTest {
 	}
 
 	@Test
-	public void testBlogTitleNotNull() throws Exception {
+	public void testTitleNotNull() throws IOException {
+		BlogEntity blogEntity = new BlogEntity();
+		blogEntity.setTitle(null); // Title is intentionally set to null.
+		blogEntity.setContent("Valid content"); // Content is valid for this test.
 
-		yakshaAssert(currentTest(), true, boundaryTestFile);
+		Set<ConstraintViolation<BlogEntity>> violations = validator.validate(blogEntity);
+		try {
+			yakshaAssert(currentTest(), !violations.isEmpty(), boundaryTestFile);
+		} catch (Exception e) {
+			yakshaAssert(currentTest(), false, boundaryTestFile);
+		}
 	}
-
-//	@Test
-//	public void testBlogContentNotNull() throws Exception {
-//		BlogEntity blogEntity = MasterData.getBlogEntity();
-//		blogEntity.setContent(null);
-//		Set<ConstraintViolation<BlogEntity>> violations = validator.validate(blogEntity);
-//		yakshaAssert(currentTest(), !violations.isEmpty() ? true : false, boundaryTestFile);
-//	}
 
 }
