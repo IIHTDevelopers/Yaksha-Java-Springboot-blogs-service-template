@@ -15,6 +15,14 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import com.yaksha.assessments.blogs.controller.BlogController;
 import com.yaksha.assessments.blogs.service.BlogService;
+import com.yaksha.assessments.blogs.entity.BlogEntity;
+import com.yaksha.assessments.blogs.testutils.MasterData;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.test.web.servlet.MvcResult;
+import org.springframework.test.web.servlet.RequestBuilder;
+import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 
 @WebMvcTest(BlogController.class)
 @AutoConfigureMockMvc
@@ -32,8 +40,21 @@ public class BlogExceptionTest {
 
 	@Test
 	public void testCreateBlogInvalidDataException() throws Exception {
-		yakshaAssert(currentTest(), true, exceptionTestFile);
+		BlogEntity blogEntity = MasterData.getBlogEntity();
+		blogEntity.setTitle(null); // Set invalid data (e.g., null title).
 
+		RequestBuilder requestBuilder = MockMvcRequestBuilders.post("/api/blogs")
+				.content(MasterData.asJsonString(blogEntity))
+				.contentType(MediaType.APPLICATION_JSON)
+				.accept(MediaType.APPLICATION_JSON);
+
+		MvcResult result = mockMvc.perform(requestBuilder).andReturn();
+
+		System.out.println("exception test case");
+		System.out.println(result.getResponse().getStatus());
+		yakshaAssert(currentTest(),
+				(result.getResponse().getStatus() == HttpStatus.BAD_REQUEST.value() ? "true" : "false"),
+				exceptionTestFile);
 	}
 
 }
