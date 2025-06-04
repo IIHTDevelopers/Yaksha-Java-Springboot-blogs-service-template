@@ -49,7 +49,7 @@ public class BlogController {
 		return null;
 	}
 
-	@GetMapping("/all")
+	@GetMapping
 	public ResponseEntity<List<BlogEntity>> getAllBlogs() {
 		// write your logic here
 		return null;
